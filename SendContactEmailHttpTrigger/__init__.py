@@ -15,6 +15,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # Parse request for email input
     email = req.params.get("email")
     name = req.params.get("name")
+    subject = req.params.get("subject")
+    message = req.params.get("message")
 
     if not email or not name:
         print("Please provide both 'email' and 'name' parameters in the query string.")
@@ -25,8 +27,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     
     # Email content
-    subject = "Your message has been received" 
-    body = f"Hello {name},\n\nThank you for submitting your message. It has been received. I will get back to you shortly!\n\nBest,\nAndrew"
+    subject = f"Your message has been received: {subject}" 
+    body = f"Hello {name},\n\nThank you for submitting your message. It has been received. Below is the recorded message:\n\n{message}\n\n I will get back to you shortly!\n\nBest,\nAndrew"
     
     #Load the environment variables
     current_dir = Path(__file__).resolve().parent if "__file__" in locals() else Path.cwd()
@@ -35,9 +37,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     # Configure email settings
     sender_email = os.getenv('EMAIL_SENDER')
-    print(sender_email)
     password_email = os.environ.get('EMAIL_PASSWORD')
-    print(password_email)
     EMAIL_SERVER = "smtp.titan.email"
     PORT = 587
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         method='POST',
         url='/api/test',
         headers={},
-        params={'email': 'andrew.kettenhofen@gmail.com', 'name': 'Whatchacallit'},  # Simulate query parameters
+        params={'email': 'andrew.whitelock@yahoo.com', 'name': 'Whatchacallit', 'subject': 'heres teh subjcet', 'message': 'I wanna send you a message because this is a test and you really should get this message.'},  # Simulate query parameters
         body=json.dumps({}).encode('utf-8')  # Simulate request body
     )
      
