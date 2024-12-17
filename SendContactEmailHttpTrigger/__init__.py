@@ -28,7 +28,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     
     # Email content
     subject = f"Your message has been received: {subject}" 
-    body = f"Hello {name},\n\nThank you for submitting your message. It has been received. Below is the recorded message:\n\n{message}\n\n I will get back to you shortly!\n\nBest,\nAndrew"
+    body = f"Hello {name},\n\nThank you for submitting your message. It has been received. Below is the recorded message:\n\n{message}\n\nI will get back to you shortly!\n\nBest Regards,\nAndrew Long-Kettenhofen"
     
     #Load the environment variables
     current_dir = Path(__file__).resolve().parent if "__file__" in locals() else Path.cwd()
