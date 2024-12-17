@@ -37,14 +37,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     # Configure email settings
     sender_email = os.getenv('EMAIL_SENDER')
+    sender_name = "Andrew Long-Kettenhofen"
     password_email = os.environ.get('EMAIL_PASSWORD')
     EMAIL_SERVER = "smtp.titan.email"
     PORT = 587
 
+    formatted_sender = f'"{sender_name}" <{sender_email}>'
+
     try:
         # Set up the MIME email
         message = MIMEMultipart()
-        message["From"] = sender_email
+        message["From"] = formatted_sender
         message["To"] = email
         message["Subject"] = subject
         message["BCC"] = "andrew.kettenhofen@gmail.com"
