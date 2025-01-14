@@ -4,3 +4,6 @@ databricks-sql-connector
 azure-functions
 azure-identity
 azure-keyvault-secrets
+ics
+arrow
+requests
