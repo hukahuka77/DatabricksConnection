@@ -34,10 +34,14 @@ def get_calendar():
 
     for event in sorted_events:
         if event.begin >= arrow.now() and "Airbnb" not in event.name:
+            # Adjust start and end times
+            start_time = event.begin.replace(hour=15, minute=0, second=0)  # Check-in: 3 PM
+            end_time = event.end.replace(hour=10, minute=0, second=0)      # Check-out: 10 AM
+            
             events_list.append({
                 "title": event.name,
-                "start": event.begin.isoformat(),
-                "end": event.end.isoformat(),
+                "start": start_time.isoformat(),  # ISO format with time
+                "end": end_time.isoformat(),
                 "description": event.description,
                 "uid": event.uid,
                 "length": event.duration.days,
@@ -50,18 +54,19 @@ def get_calendar():
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         events = get_calendar()
-        return {
-            "statusCode": 200,
-            "body": json.dumps(events),
-            "headers": {
+        return func.HttpResponse(
+            body=json.dumps(events),
+            status_code=200,
+            mimetype="application/json",
+            headers= {
                 "Content-Type": "application/json"
             }
-        }
+         )
     except Exception as e:
-        return {
-            "statusCode": 500,
-            "body": json.dumps({"error": str(e)})
-        }
+        return func.HttpResponse(
+            statusCode= 500,
+            body= json.dumps({"error": str(e)})
+        )
 
 if __name__ == "__main__":
     # For local testing
