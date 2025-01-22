@@ -13,9 +13,11 @@ def get_calendar():
     # Parse the URLs
     airbnb_url = "https://www.airbnb.com/calendar/ical/54151941.ics?s=bb9e64f8505da96059cbf497632913d3"
     vrbo_url = "http://www.vrbo.com/icalendar/25d7d6f9c6da48c5af029ead9cd878be.ics?nonTentative"
-
+    gcal_url = "https://calendar.google.com/calendar/ical/41f2445893a9e75115e63788ba4848794f082439f53c8cf02a14444fb9613bcc%40group.calendar.google.com/public/basic.ics"
+    
     airbnb_cal = Calendar(requests.get(airbnb_url, headers=headers).text)
     vrbo_cal = Calendar(requests.get(vrbo_url, headers=headers).text)
+    gcal_url = Calendar(requests.get(gcal_url, headers=headers).text)
 
     # Combine calendars
     merged_cal = Calendar()
@@ -26,6 +28,9 @@ def get_calendar():
     for event in airbnb_cal.events:
         merged_cal.events.add(event)
 
+    for event in gcal_url.events:
+        merged_cal.events.add(event)
+
     # Sort events
     sorted_events = sorted(merged_cal.events, key=lambda event: event.begin, reverse=False)
 
@@ -33,20 +38,20 @@ def get_calendar():
     events_list = []
 
     for event in sorted_events:
-        if event.begin >= arrow.now() and "Airbnb" not in event.name:
-            # Adjust start and end times
-            start_time = event.begin.replace(hour=15, minute=0, second=0)  # Check-in: 3 PM
-            end_time = event.end.replace(hour=10, minute=0, second=0)      # Check-out: 10 AM
-            
-            events_list.append({
-                "title": event.name,
-                "start": start_time.isoformat(),  # ISO format with time
-                "end": end_time.isoformat(),
-                "description": event.description,
-                "uid": event.uid,
-                "length": event.duration.days,
-                "status": event.status
-            })
+        # if event.begin >= arrow.now() and "Airbnb" not in event.name:
+        # Adjust start and end times
+        start_time = event.begin.replace(hour=15, minute=0, second=0)  # Check-in: 3 PM
+        end_time = event.end.replace(hour=10, minute=0, second=0)      # Check-out: 10 AM
+        
+        events_list.append({
+            "title": event.name,
+            "start": start_time.isoformat(),  # ISO format with time
+            "end": end_time.isoformat(),
+            "description": event.description,
+            "uid": event.uid,
+            "length": event.duration.days,
+            "status": event.status
+        })
 
     return events_list
 

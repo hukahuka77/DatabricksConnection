@@ -2,3 +2,4 @@
 local.settings.json
 .python_packages
 __pycache__
+testing.py

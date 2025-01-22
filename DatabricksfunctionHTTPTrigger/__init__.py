@@ -92,7 +92,7 @@ if __name__ == "__main__":
         method='POST',
         url='/api/test',
         headers={},
-        params={'id': '3'},  # Simulate query parameters
+        params={},  # Simulate query parameters
         body=json.dumps({"id": "3"}).encode('utf-8')  # Simulate request body
     )
 

@@ -1,0 +1,14 @@
+{
+  "scriptFile": "__init__.py",
+  "entryPoint": "main",
+  "bindings": [
+      {
+        "name": "myTimer",
+        "type": "timerTrigger",
+        "direction": "in",
+        "schedule": "%CALENDAR_EMAIL_TIMER_SCHEDULE%",
+        "runOnStartup": false,
+        "useMonitor": false
+      }
+    ]
+}
