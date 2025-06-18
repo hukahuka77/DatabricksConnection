@@ -1,11 +1,18 @@
 import os
 import logging
 import azure.functions as func
-from .email_send import send_email
+from email_send import send_email
 import json
+from pathlib import Path
+from dotenv import load_dotenv # pip install python-dotenv
+
 
 def main(myTimer: func.TimerRequest) -> None:
     logging.info('Trigger executed. Starting job')
+    
+    current_dir = Path(__file__).resolve().parent if "__file__" in locals() else Path.cwd()
+    envars = current_dir / ".env"
+    load_dotenv(envars)
 
     # Load emails from environment variables
     emails_list_str = os.getenv('EMAILS_LIST')

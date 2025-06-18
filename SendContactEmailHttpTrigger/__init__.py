@@ -39,8 +39,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     sender_email = os.getenv('EMAIL_SENDER')
     sender_name = "Andrew Long-Kettenhofen"
     password_email = os.environ.get('EMAIL_PASSWORD')
-    EMAIL_SERVER = "smtp.titan.email"
-    PORT = 587
+    server_email = os.environ.get('EMAIL_SERVER')
+    port = 587
 
     formatted_sender = f'"{sender_name}" <{sender_email}>'
 
@@ -54,7 +54,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         message.attach(MIMEText(body, "plain"))
         print("Email message created.")
         # Send email using SMTP
-        with smtplib.SMTP(EMAIL_SERVER, PORT) as server:
+        with smtplib.SMTP(server_email, port) as server:
             server.starttls()  # Secure the connection
             print("Connection secured.")
             server.login(sender_email, password_email)

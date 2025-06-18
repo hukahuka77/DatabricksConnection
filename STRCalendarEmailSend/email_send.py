@@ -4,15 +4,16 @@ from email.message import EmailMessage
 from email.utils import formataddr, make_msgid
 from pathlib import Path
 from dotenv import load_dotenv # pip install python-dotenv
-from .get_calendar import get_calendar
+from get_calendar import get_calendar
 
 # EMAIL_SERVER = "smtp-mail.outlook.com"
 # EMAIL_SERVER = "smtp.gmail.com"
 
 def send_email(subject, receiver_email, name):
     # For hostinger
-    EMAIL_SERVER = "smtp.titan.email"
-    PORT = 587
+    server_email = os.environ.get('EMAIL_SERVER')
+    port = 587
+
 
     #Load the environment variables
     current_dir = Path(__file__).resolve().parent if "__file__" in locals() else Path.cwd()
@@ -81,7 +82,7 @@ def send_email(subject, receiver_email, name):
         subtype="html",
     )
 
-    with smtplib.SMTP(EMAIL_SERVER, PORT) as server:
+    with smtplib.SMTP(server_email, port) as server:
         server.starttls()
         server.login(sender_email, password_email)
         server.send_message(msg)
