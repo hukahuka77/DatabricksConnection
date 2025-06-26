@@ -1,7 +1,7 @@
 import os
 import logging
 import azure.functions as func
-from email_send import send_email
+from .email_send import send_email
 import json
 from pathlib import Path
 from dotenv import load_dotenv # pip install python-dotenv
@@ -38,16 +38,3 @@ def main(myTimer: func.TimerRequest) -> None:
     if myTimer.past_due:
         logging.info('The timer is past due!')
     logging.info('Python timer trigger function executed.')
-
-# Local Testing
-if __name__ == '__main__':
-    class MockTimerRequest:
-        """Mock TimerRequest for local testing."""
-        def __init__(self, past_due=False):
-            self.past_due = past_due
-
-    logging.basicConfig(level=logging.INFO)
-
-    # Mock a timer request for local testing
-    mock_timer = MockTimerRequest()
-    main(mock_timer)
