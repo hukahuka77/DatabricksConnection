@@ -136,7 +136,7 @@ def send_email(subject, receiver_email, name):
             <p>Here is the booking schedule for 3044 W Sierra Vista Dr. as of {current_date}:</p>
             {events_html}
             <p>For a live view of the calendar, please click the button below:</p>
-            <a href="https://alkazhomes.com/pages/sierra.html" class="cta-button">
+            <a href="https://alkazhomes.com/property/1/calendar" class="cta-button">
               View Live Calendar
             </a>
           </div>
